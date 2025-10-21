@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MusiqueController!{% endblock %}
+
+{% block body %}
+    <div class="search">
+        {{ render(path('app_include_search_form')) }}
+    </div>
+
+{% endblock %}
