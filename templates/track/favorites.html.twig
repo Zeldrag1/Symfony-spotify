@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Favorie{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_track_index') }}">accueil</a>
+    {% if tracks is not empty %}
+        <h1>Liste des favorie</h1>
+
+        <div class="tracks">
+            {% for track in tracks %}
+                <div class="track-item">
+                    <span class="track-title">{{ track.name }} </span>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% endif %}
+{% endblock %}

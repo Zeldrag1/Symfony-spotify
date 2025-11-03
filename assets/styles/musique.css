@@ -1,0 +1,127 @@
+body {
+    text-align:center;
+}
+.btn-love{
+    cursor:pointer;
+    background:transparent;
+    border:none;
+    font-size:50px;
+    outline:none;
+    color:#c0c1c3;
+    position:relative;
+    .fa {
+        position:relative;
+        z-index:1;
+    }
+    .small-ornament {
+        width:135px;
+        height:135px;
+        position:absolute;
+        margin-left: -67.5px;
+        margin-top: -67.5px;
+        left: 50%;
+        transform:scale(0);
+        top: 50%;
+        .ornament {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            margin-left: -8px;
+            margin-top: -8px;
+            opacity: 0.6;
+            left: 50%;
+            top: 50%;
+            border-radius:8px;
+            transform-origin: 50% 50% 0px;
+            &.o-1{
+                background:#988ADE;
+                transform:translate(-90px,-50px);
+            }
+            &.o-2{
+                background:#DE8AA0;
+                transform:translate(0px,-100px);
+            }
+            &.o-3{
+                background:#8AAEDE;
+                transform:translate(90px,-50px);
+            }
+            &.o-4{
+                background:#8ADEAD;
+                transform:translate(90px,50px);
+            }
+            &.o-5{
+                background:#DEC58A;
+                transform:translate(0px,100px);
+            }
+            &.o-6{
+                background:#8AD1DE;
+                transform:translate(-90px,50px);
+            }
+        }
+    }
+    .circle{
+        position: absolute;
+        width: 135px;
+        height: 135px;
+        margin-left: -67.5px;
+        margin-top: -67.5px;
+        border-radius:50%;
+        opacity: 0;
+        left: 50%;
+
+        top: 50%;
+        transform: translate(0px, 0px) rotate(0deg) scale(0);
+        transform-origin: 50% 50% 0px;
+    }
+}
+.tracks {
+    margin:0 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* espace entre les musiques */
+}
+
+.track-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* titre à gauche, cœur à droite */
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.track-title {
+    font-size: 1rem;
+    color: #333;
+}
+
+.btn-love {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-love .fa-heart {
+    font-size: 1.2rem;
+    color: #c0c1c3;
+    transition: color 0.3s ease;
+}
+
+.btn-love.act .fa-heart {
+    color: #e3274d;
+}
+
+/* Optionnel : réduire les animations décoratives */
+.small-ornament, .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
