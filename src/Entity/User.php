@@ -33,10 +33,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: 'user_favorites')]
     private Collection $tracks;
 
+    #[ORM\ManyToMany(targetEntity: Artist::class, mappedBy: 'users')]
+    private Collection $favoriteArtists;
+
+
     public function __construct()
     {
         $this->tracks = new ArrayCollection();
+        $this->favoriteArtists = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {

@@ -10,8 +10,13 @@
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe '}) }}
+        {{ form_row(registrationForm.plainPasswordConfirm) }}
 
-        <button type="submit" class="btn">S'inscrire</button>
+
+    <button type="submit" class="btn">S'inscrire</button>
     {{ form_end(registrationForm) }}
     <a href="{{ path('app_login') }}">Connection</a>
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
 {% endblock %}

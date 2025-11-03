@@ -17,6 +17,7 @@ class SearchType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Search',
                 ],
+                'label' => false,
             ]);
     }
 
