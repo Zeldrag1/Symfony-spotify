@@ -1,19 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Favorie{% endblock %}
+{% block title %}Favoris{% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_track_index') }}">accueil</a>
-    {% if tracks is not empty %}
-        <h1>Liste des favorie</h1>
+    <div class="mb-3">
+        <a class="btn" href="{{ path('app_logout') }}">Déconnexion</a>
+        <a class="btn" href="{{ path('app_track_index') }}">Accueil</a>
+    </div>
 
-        <div class="tracks">
+    {% if tracks is not empty %}
+        <h2 class="mb-3">Mes favoris</h2>
+        <div class="tracks tracks-favorites">
             {% for track in tracks %}
-                <div class="track-item">
-                    <span class="track-title">{{ track.name }} </span>
+                <div class="track-item" data-track-id="{{ track.spotifyId }}">
+                    <span class="track-title">{{ track.name }}</span>
+                    <button class="btn-love act" data-track-id="{{ track.spotifyId }}" data-track-name="{{ track.name }}">
+                        <span class="fa fa-heart"></span>
+                    </button>
                 </div>
             {% endfor %}
         </div>
-
+    {% else %}
+        <p>Vous n'avez encore aucun favori.</p>
     {% endif %}
 {% endblock %}

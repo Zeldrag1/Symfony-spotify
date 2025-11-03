@@ -81,18 +81,7 @@ body {
     gap: 8px; /* espace entre les musiques */
 }
 
-.track-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* titre à gauche, cœur à droite */
-    padding: 6px 10px;
-    border-bottom: 1px solid #ddd;
-}
 
-.track-title {
-    font-size: 1rem;
-    color: #333;
-}
 
 .btn-love {
     position: relative;

@@ -1,38 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Spotify de wich{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_logout') }}">Déconnexion</a> <br>
-    <a href="{{ path('app_track_favorites') }}">favorie</a>
-    <div class="search">
+    <div class="mb-3">
+        <a class="btn" href="{{ path('app_logout') }}">Déconnexion</a>
+        <a class="btn" href="{{ path('app_track_favorites') }}">Favoris</a>
+    </div>
+
+    <div class="search mb-4">
         {{ render(path('app_include_search_form')) }}
     </div>
 
     {% if tracks is not empty %}
-        <h1>Résultat de la recherche</h1>
-
-        <div class="tracks">
+        <h2 class="mb-3">Résultats de la recherche</h2>
+        <div class="tracks tracks-home">
             {% for track in tracks %}
                 <div class="track-item">
-                    <span class="track-title">{{ track.name }} </span>
-                    <button class="btn-love" data-track-id="{{ track.spotifyId }}" data-track-name="{{ track.name }}">
+                    <span class="track-title">{{ track.name }}</span>
+                    <button class="btn-love {% if track.spotifyId in userFavorites %}act{% endif %}"
+                            data-track-id="{{ track.spotifyId }}"
+                            data-track-name="{{ track.name }}">
                         <span class="fa fa-heart"></span>
-                        <div class="small-ornament">
-                            <div class="ornament o-1"></div>
-                            <div class="ornament o-2"></div>
-                            <div class="ornament o-3"></div>
-                            <div class="ornament o-4"></div>
-                            <div class="ornament o-5"></div>
-                            <div class="ornament o-6"></div>
-                        </div>
-                        <div class="circle">
-                            <svg><ellipse id="eclipse" rx="50" ry="50" cx="67.5" cy="67.5" fill-opacity="1" fill="transparent" stroke="#988ADE" stroke-width="0"></ellipse></svg>
-                        </div>
                     </button>
                 </div>
             {% endfor %}
         </div>
-
+    {% else %}
+        <p>Aucun résultat trouvé.</p>
     {% endif %}
 {% endblock %}

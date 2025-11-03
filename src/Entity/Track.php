@@ -61,12 +61,12 @@ class Track
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $pictureLink = null;
 
-//    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'tracks')]
-//    private Collection $users;
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'tracks')]
+    private Collection $users;
 
     public function __construct()
     {
-        //$this->users = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,7 +254,7 @@ class Track
         return $this;
     }
 
-  /*  public function getUsers(): Collection
+    public function getUsers(): Collection
     {
         return $this->users;
     }
@@ -273,5 +273,5 @@ class Track
         $this->users->removeElement($user);
 
         return $this;
-    }*/
+    }
 }

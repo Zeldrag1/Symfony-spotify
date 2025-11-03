@@ -28,27 +28,45 @@ class TrackController extends AbstractController
     #[Route('/like', name: 'app_track_like', methods: ['POST'])]
     public function likeTrack(Request $request, EntityManagerInterface $em): JsonResponse
     {
-        dump($request->request->all());
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $data = json_decode($request->getContent(), true);
-        dump($data);
         if (!$data || !isset($data['id'])) {
             return new JsonResponse(['error' => 'Invalid data'], 400);
         }
 
-        $track = new Track();
-        $track->setSpotifyUrl('#');
-        $track->setSpotifyId($data['id']);
-        $track->setName($data['name']);
+        $user = $this->getUser();
 
-        $em->persist($track);
+        $track = $em->getRepository(Track::class)->findOneBy(['spotifyId' => $data['id']]);
+
+        if (!$track) {
+            $track = new Track();
+            $track->setSpotifyId($data['id']);
+            $track->setName($data['name']);
+            $track->setSpotifyUrl('#');
+            $em->persist($track);
+        }
+
+        if ($user->getTracks()->contains($track)) {
+            $user->removeTrack($track);
+            $em->flush();
+            return new JsonResponse(['success' => true, 'message' => 'Retiré des favoris']);
+        }
+
+        $user->addTrack($track);
         $em->flush();
-        return new JsonResponse(['success' => true, 'message' => 'Track enregistrée']);
+
+        return new JsonResponse(['success' => true, 'message' => 'Ajouté aux favoris']);
     }
+
 
     #[Route('/favorites', name: 'app_track_favorites')]
     public function favorites(EntityManagerInterface $em): Response
     {
-        $tracks = $em->getRepository(Track::class)->findAll();
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
+        $tracks = $user->getTracks();
 
         return $this->render('track/favorites.html.twig', [
             'tracks' => $tracks,
@@ -58,10 +76,19 @@ class TrackController extends AbstractController
     #[Route('/{search?}', name: 'app_track_index')]
     public function index(?string $search): Response
     {
-        dump($search);
+        $tracks = $this->spotifyRequestService->searchTracks($search ?: "kazzey", $this->token);
+
+        $userFavorites = [];
+        if ($this->getUser()) {
+            $userFavorites = $this->getUser()->getTracks()
+                ->map(fn($track) => $track->getSpotifyId())
+                ->toArray();
+        }
+
         return $this->render('track/index.html.twig', [
-            'tracks' => $this->spotifyRequestService->searchTracks($search ?: "kazzey", $this->token),
+            'tracks' => $tracks,
             'search' => $search,
+            'userFavorites' => $userFavorites,
         ]);
     }
 

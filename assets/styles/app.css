@@ -1,3 +1,158 @@
+/* === Body et Container === */
 body {
-    background-color: skyblue;
+    background-color: #363636; /* fond sombre façon Spotify */
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* === Liens et Boutons === */
+a {
+    text-decoration: none;
+    color: #1db954; /* vert Spotify */
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #1ed760;
+}
+
+.btn {
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.2s;
+    margin: 15px;
+}
+
+.btn-primary {
+    background-color: rgba(185, 185, 185, 0.5);
+    border-color: #1db954;
+    padding: 15px;
+}
+
+.btn-primary:hover {
+    background-color: #1ed760;
+    border-color: #1ed760;
+}
+
+.btn-secondary {
+    background-color: #2a2a2a;
+    border-color: #2a2a2a;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #3a3a3a;
+    border-color: #3a3a3a;
+}
+
+/* === Barre de recherche === */
+.search input[type="text"] {
+    background-color: #2a2a2a;
+    border: none;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 1rem;
+}
+
+.search input[type="text"]::placeholder {
+    color: #b3b3b3;
+}
+
+/* === Liste de tracks === */
+.tracks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.track-item {
+    background-color: #181818;
+    margin: 5px;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    flex: 1 1 calc(25% - 1rem);
+    min-width: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.track-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(159, 159, 159, 0.5);
+}
+
+.track-title {
+    font-weight: 600;
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 70%;
+    color: #fff; /* texte blanc */
+}
+
+/* === Bouton coeur === */
+.btn-love {
+    position: relative;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #b3b3b3; /* gris clair par défaut */
+    transition: color 0.3s;
+}
+
+.btn-love.act,
+.btn-love:hover {
+    color: #1db954; /* vert Spotify */
+}
+
+/* === Pour la page favoris on force vert === */
+.tracks-favorites .btn-love.act {
+    color: #1db954;
+}
+
+/* === Ornements et cercle animés === */
+.small-ornament {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+}
+
+.circle {
+    position: absolute;
+    top: -15%;
+    left: -15%;
+    width: 150%;
+    height: 150%;
+    pointer-events: none;
+}
+
+/* === Responsive === */
+@media (max-width: 992px) {
+    .track-item {
+        flex: 1 1 calc(33% - 1rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .track-item {
+        flex: 1 1 calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 576px) {
+    .track-item {
+        flex: 1 1 100%;
+    }
 }
