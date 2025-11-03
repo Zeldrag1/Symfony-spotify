@@ -3,10 +3,11 @@
 {% block title %}Spotify de wich{% endblock %}
 
 {% block body %}
+    <a href="{{ path('app_logout') }}">Déconnexion</a> <br>
+    <a href="{{ path('app_track_favorites') }}">favorie</a>
     <div class="search">
         {{ render(path('app_include_search_form')) }}
     </div>
-    <a href="{{ path('app_track_favorites') }}">favorie</a>
 
     {% if tracks is not empty %}
         <h1>Résultat de la recherche</h1>
