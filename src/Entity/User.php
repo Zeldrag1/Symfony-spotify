@@ -40,7 +40,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->tracks = new ArrayCollection();
-        $this->favoriteArtists = new ArrayCollection();
     }
 
 
@@ -113,4 +112,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
+
+    public function getFavoriteArtists(): Collection
+    {
+        return $this->favoriteArtists;
+    }
+
+    public function addFavoriteArtist(Artist $artist): static
+    {
+        if (!$this->favoriteArtists->contains($artist)) {
+            $this->favoriteArtists->add($artist);
+            $artist->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteArtist(Artist $artist): static
+    {
+        if ($this->favoriteArtists->removeElement($artist)) {
+            $artist->removeUser($this);
+        }
+
+        return $this;
+    }
+
 }

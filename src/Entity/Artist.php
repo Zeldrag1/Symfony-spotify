@@ -15,7 +15,7 @@ class Artist
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $spotifyId = null;
 
     #[ORM\Column(length: 255)]
@@ -29,6 +29,53 @@ class Artist
         $this->users = new ArrayCollection();
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
+    public function getSpotifyId(): ?string
+    {
+        return $this->spotifyId;
+    }
+
+    public function setSpotifyId(string $spotifyId): static
+    {
+        $this->spotifyId = $spotifyId;
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        $this->users->removeElement($user);
+        return $this;
+    }
 }
-

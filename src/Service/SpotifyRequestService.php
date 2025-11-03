@@ -34,4 +34,18 @@ readonly class SpotifyRequestService
         ]);
         return $this->trackFactory->createFromSpotifyData($response->toArray());
     }
+
+    public function searchArtists(string $query, string $token): array
+    {
+        $url = 'https://api.spotify.com/v1/search?q=' . urlencode($query) . '&type=artist&limit=20';
+        $response = $this->httpClient->request('GET', $url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token
+            ]
+        ]);
+        $data = $response->toArray();
+
+        return $data['artists']['items'] ?? [];
+    }
+
 }

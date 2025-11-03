@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Artistes{% endblock %}
+
+{% block body %}
+    <div class="mb-3">
+        <a class="btn" href="{{ path('app_logout') }}">Déconnexion</a>
+        <a class="btn" href="{{ path('app_artist_favorites') }}">Favoris</a>
+        <a class="btn btn-success" href="{{ path('app_track_index') }}">Artistes</a>
+    </div>
+
+    <div class="search mb-4">
+        {{ render(path('app_include_search_form')) }}
+    </div>
+
+    {% if artists is not empty %}
+        <h2 class="mb-3">Résultats de la recherche</h2>
+        <div class="artists artist-home">
+            {% for artist in artists %}
+                <div class="artist-item">
+                    <span class="artist-title">{{ artist.name }}</span>
+                    <button class="btn-love {% if artist.id in userFavorites %}act{% endif %}"
+                            data-artist-id="{{ artist.id }}"
+                            data-artist-name="{{ artist.name }}">
+                        <span class="fa fa-heart"></span>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucun résultat trouvé.</p>
+    {% endif %}
+{% endblock %}

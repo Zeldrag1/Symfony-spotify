@@ -1,28 +1,27 @@
-const trackButtons = document.querySelectorAll('.track-item .btn-love');
-if (trackButtons.length === 0) {
-    // Pas de tracks sur cette page → ne rien faire
-    console.log("musique.js : aucune track trouvée, script ignoré");
+const artistButtons = document.querySelectorAll('.artist-item .btn-love');
+if (artistButtons.length === 0) {
+    console.log("artist.js : aucun artiste trouvé, script ignoré");
 } else {
-    trackButtons.forEach(btn => {
+    artistButtons.forEach(btn => {
         btn.addEventListener('click', function () {
-            const trackItem = this.closest('.track-item');
-            const containerTrack = trackItem.closest('.tracks');
-            const isFavoritesPageTrack = containerTrack.classList.contains('tracks-favorites');
+            const artistItem = this.closest('.artist-item');
+            const containerArtist = artistItem.closest('.artists'); // correspond à la nouvelle classe
+            const isFavoritesPageArtist = containerArtist.classList.contains('artist-favorites');
 
-            const id_track = this.dataset.trackId;
-            const name_track = this.dataset.trackName;
+            const id_artist = this.dataset.artistId;
+            const name_artist = this.dataset.artistName;
             const heart = this.querySelector('.fa-heart');
 
-            fetch('/track/like', {
+            fetch('/artist/like', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ id: id_track, name: name_track })
+                body: JSON.stringify({ id: id_artist, name: name_artist })
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        if (isFavoritesPageTrack) {
-                            trackItem.remove();
+                        if (isFavoritesPageArtist) {
+                            artistItem.remove();
                         } else {
                             if (this.classList.contains('act')) {
                                 this.classList.remove('act');
@@ -32,6 +31,8 @@ if (trackButtons.length === 0) {
                                 heart.style.color = '#e3274d';
                             }
                         }
+                    } else if (data.error) {
+                        alert("Erreur : " + data.error);
                     }
                 })
                 .catch(error => console.error('Erreur fetch:', error));

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Favoris{% endblock %}
+
+{% block body %}
+    <div class="mb-3">
+        <a class="btn" href="{{ path('app_logout') }}">Déconnexion</a>
+        <a class="btn" href="{{ path('app_artist_index') }}">Accueil</a>
+    </div>
+
+    {% if artists is not empty %}
+        <h2 class="mb-3">Mes favoris</h2>
+        <div class="artists artist-favorites">
+            {% for artist in artists %}
+                <div class="artist-item" data-artist-id="{{ artist.spotifyId }}">
+                    <span class="artist-title">{{ artist.name }}</span>
+                    <button class="btn-love act" data-artist-id="{{ artist.spotifyId }}" data-artist-name="{{ artist.name }}">
+                        <span class="fa fa-heart"></span>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Vous n'avez encore aucun favori.</p>
+    {% endif %}
+{% endblock %}
